@@ -1,0 +1,1473 @@
+<title>LeadGuard Pitch Deck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  /* ============================================================
+     Tokens — light is the base; dark redefines only the values.
+     Neutrals carry a slight slate-blue bias so they read chosen.
+     Indigo is structure; green/amber/red are the three business
+     outcomes and nothing else.
+     ============================================================ */
+  :root {
+    --ground:      #F3F5FB;
+    --surface:     #FFFFFF;
+    --surface-2:   #EAEDF7;
+    --ink:         #131725;
+    --ink-2:       #565D77;
+    --ink-3:       #8189A3;
+    --line:        #D7DCEC;
+    --line-strong: #BCC4DE;
+    --accent:      #2743A6;
+    --accent-ink:  #2743A6;
+    --accent-soft: #E3E8F8;
+    --ok:          #14804A;
+    --ok-soft:     #DEF2E6;
+    --warn:        #8F5E0C;
+    --warn-soft:   #FAEED4;
+    --bad:         #AF2F28;
+    --bad-soft:    #FAE2E0;
+    --shadow:      0 1px 2px rgba(19, 23, 37, .05), 0 12px 32px -16px rgba(19, 23, 37, .18);
+
+    --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+    --body:    "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono:    "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    color-scheme: light;
+  }
+
+  /* System dark. Guarded so an explicit light choice still wins,
+     and written as a plain media query rather than CSS nesting. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0D0F17;
+      --surface:     #161926;
+      --surface-2:   #1E2233;
+      --ink:         #E9EBF4;
+      --ink-2:       #A0A8C2;
+      --ink-3:       #757D98;
+      --line:        #2A2F44;
+      --line-strong: #3A415C;
+      --accent:      #8AA4FF;
+      --accent-ink:  #A9BCFF;
+      --accent-soft: #1B2240;
+      --ok:          #4FD394;
+      --ok-soft:     #10301F;
+      --warn:        #F2C255;
+      --warn-soft:   #33260A;
+      --bad:         #FF8B82;
+      --bad-soft:    #35150F;
+      --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 14px 36px -18px rgba(0, 0, 0, .7);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0D0F17;
+    --surface:     #161926;
+    --surface-2:   #1E2233;
+    --ink:         #E9EBF4;
+    --ink-2:       #A0A8C2;
+    --ink-3:       #757D98;
+    --line:        #2A2F44;
+    --line-strong: #3A415C;
+    --accent:      #8AA4FF;
+    --accent-ink:  #A9BCFF;
+    --accent-soft: #1B2240;
+    --ok:          #4FD394;
+    --ok-soft:     #10301F;
+    --warn:        #F2C255;
+    --warn-soft:   #33260A;
+    --bad:         #FF8B82;
+    --bad-soft:    #35150F;
+    --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 14px 36px -18px rgba(0, 0, 0, .7);
+    color-scheme: dark;
+  }
+
+  /* ============================================================ */
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .deck {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* --- Top bar --------------------------------------------------- */
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .wordmark {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: -.015em;
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+  }
+  .wordmark b { color: var(--accent-ink); font-weight: 700; }
+  .wordmark span {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .lang {
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .lang button {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    padding: 5px 13px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .lang button[aria-pressed="true"] {
+    background: var(--surface);
+    color: var(--accent-ink);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  }
+  .lang button:focus-visible,
+  .nav button:focus-visible,
+  .dots button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* --- Slide stage ----------------------------------------------- */
+  .stage {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: clamp(24px, 4vw, 46px);
+    min-height: 560px;
+    display: flex;
+  }
+
+  .slide {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    animation: rise .26s cubic-bezier(.22, .8, .3, 1);
+  }
+  @keyframes rise { from { transform: translateY(7px); } to { transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .slide { animation: none; }
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  h1, h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -.025em;
+    line-height: 1.08;
+    text-wrap: balance;
+    margin: 0;
+  }
+  h1 { font-size: clamp(40px, 6.4vw, 68px); }
+  h2 { font-size: clamp(27px, 3.6vw, 40px); }
+
+  .lede {
+    font-size: clamp(16px, 1.5vw, 18.5px);
+    color: var(--ink-2);
+    max-width: 63ch;
+    margin: 0;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .punch {
+    margin: 0;
+    padding: 15px 18px;
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-size: 15.5px;
+    color: var(--ink);
+    max-width: 74ch;
+  }
+  .punch strong { font-weight: 600; }
+
+  .grow { flex: 1; }
+
+  /* --- Title slide ----------------------------------------------- */
+  .title-sub {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(18px, 2.2vw, 25px);
+    color: var(--accent-ink);
+    letter-spacing: -.01em;
+    margin: -8px 0 0;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .fact {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 11px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--ink-2);
+    background: var(--surface-2);
+  }
+  .fact b { color: var(--ink); font-weight: 600; }
+
+  /* --- Generic grids --------------------------------------------- */
+  .cols {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  }
+  .duo {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    .duo { grid-template-columns: 1fr; }
+  }
+
+  /* A plain bordered block. Used where things are peers. */
+  .box {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 17px;
+    background: var(--surface);
+  }
+  .box h3 {
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .box p {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* --- Pipeline chain -------------------------------------------- */
+  .chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 7px;
+  }
+  .step {
+    flex: 1 1 92px;
+    padding: 12px 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--surface-2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    min-height: 74px;
+  }
+  .step .n {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink-3);
+    letter-spacing: .08em;
+  }
+  .step .t {
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  /* The AI step is the only borrowed judgement in the chain, so it
+     is the only one marked. */
+  .step.ai {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .step.ai .t { color: var(--accent-ink); }
+  .step.ai .n { color: var(--accent-ink); }
+
+  /* --- Extraction: text in, fields out --------------------------- */
+  .quote {
+    font-size: 15px;
+    line-height: 1.62;
+    color: var(--ink);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 15px 17px;
+    margin: 0;
+    font-style: normal;
+  }
+  .quote cite {
+    display: block;
+    margin-top: 9px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-style: normal;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .fields {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .fields div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+    background: var(--surface);
+    padding: 9px 14px;
+  }
+  .fields dt {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .fields dd {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--accent-ink);
+    text-align: right;
+  }
+
+  /* --- Score sheet ----------------------------------------------- */
+  .sheet { overflow-x: auto; }
+  .sheet table {
+    width: 100%;
+    min-width: 380px;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .sheet th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 0 0 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sheet th:last-child, .sheet td:last-child { text-align: right; }
+  .sheet td {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .sheet tr:last-child td { border-bottom: 0; }
+  .sheet .pts {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--ok);
+    white-space: nowrap;
+  }
+  .sheet .pts.part { color: var(--warn); }
+  .sheet .pts.zero { color: var(--ink-3); }
+  .sheet .pts.neg  { color: var(--bad); }
+  .sheet .total td {
+    border-top: 2px solid var(--line-strong);
+    border-bottom: 0;
+    padding-top: 11px;
+    font-weight: 600;
+  }
+  .sheet .total .pts { font-size: 16px; color: var(--ink); }
+
+  /* --- Score readout --------------------------------------------- */
+  .readout {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .big {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 62px;
+    line-height: .92;
+    letter-spacing: -.035em;
+    font-variant-numeric: tabular-nums;
+  }
+  .big small {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--ink-3);
+  }
+  .big.good { color: var(--ok); }
+  .big.mid  { color: var(--warn); }
+  .big.poor { color: var(--bad); }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid;
+  }
+  .pill.good { color: var(--ok);   background: var(--ok-soft);   border-color: var(--ok); }
+  .pill.mid  { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .pill.poor { color: var(--bad);  background: var(--bad-soft);  border-color: var(--bad); }
+  .pill.flat { color: var(--ink-2); background: var(--surface-2); border-color: var(--line-strong); }
+
+  /* --- Outcome cards: the one place a severity stripe earns its keep */
+  .outcome {
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--line-strong);
+    border-radius: 3px 3px 10px 10px;
+    padding: 17px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .outcome.good { border-top-color: var(--ok); }
+  .outcome.mid  { border-top-color: var(--warn); }
+  .outcome.poor { border-top-color: var(--bad); }
+  .outcome .who {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -.01em;
+  }
+  .outcome .num {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .outcome.good .num { color: var(--ok); }
+  .outcome.mid  .num { color: var(--warn); }
+  .outcome.poor .num { color: var(--bad); }
+  .outcome .num small {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    letter-spacing: 0;
+  }
+  .outcome p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .outcome .dest {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+  }
+
+  /* --- Audit log ------------------------------------------------- */
+  .log {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.85;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 15px 17px;
+    overflow-x: auto;
+    margin: 0;
+  }
+  .log div { display: flex; gap: 14px; white-space: nowrap; }
+  .log b {
+    color: var(--ink-3);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    flex: none;
+  }
+  .log i { font-style: normal; color: var(--ink); }
+  .log .hit i { color: var(--ok); font-weight: 500; }
+
+  /* --- Routing rows ---------------------------------------------- */
+  .routes { display: grid; gap: 8px; }
+  .route {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--surface-2);
+    font-size: 13px;
+  }
+  .route .cond { font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+  .route .arrow { color: var(--ink-3); font-family: var(--mono); }
+  .route .team { font-weight: 600; text-align: right; color: var(--ink); }
+  @media (max-width: 620px) {
+    .route { grid-template-columns: 1fr; gap: 5px; }
+    .route .team, .route .arrow { text-align: left; }
+  }
+
+  /* --- Split: human vs system ------------------------------------ */
+  .decisions {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 620px) { .decisions { grid-template-columns: 1fr; } }
+  .decision {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: var(--surface-2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* --- Limits list ----------------------------------------------- */
+  .limits { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .limits li {
+    display: flex;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+  .limits li::before {
+    content: "—";
+    color: var(--ink-3);
+    font-family: var(--mono);
+    flex: none;
+  }
+
+  /* --- Verticals grid -------------------------------------------- */
+  .verts {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+  }
+  .vert {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 13px 15px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .vert h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0;
+    letter-spacing: -.01em;
+  }
+  .vert ol {
+    margin: 0;
+    padding-left: 17px;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.45;
+  }
+  .vert ol li { margin-bottom: 3px; }
+  .vert ol li::marker { color: var(--accent-ink); font-family: var(--mono); font-size: 11px; }
+
+  /* --- Split bar: universal vs vertical --------------------------- */
+  .split {
+    display: flex;
+    height: 34px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .split div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .split .u { flex: 68; background: var(--surface-2); color: var(--ink-2); }
+  .split .v { flex: 32; background: var(--accent-soft); color: var(--accent-ink); }
+
+  /* --- Comparison pair ------------------------------------------- */
+  .versus {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .versus .mid {
+    display: flex;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    color: var(--ink-3);
+  }
+  @media (max-width: 700px) {
+    .versus { grid-template-columns: 1fr; }
+    .versus .mid { justify-content: center; }
+  }
+
+  /* --- Bottom nav ------------------------------------------------ */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .nav button {
+    font-family: var(--body);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .nav button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent-ink); }
+  .nav button:disabled { opacity: .4; cursor: not-allowed; }
+
+  .dots { display: flex; align-items: center; gap: 6px; }
+  .dots button {
+    width: 8px; height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--line-strong);
+    cursor: pointer;
+  }
+  .dots button[aria-current="true"] { background: var(--accent); width: 22px; }
+
+  .count {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+    min-width: 52px;
+    text-align: right;
+  }
+
+  .hint {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-3);
+    margin: 0;
+  }
+  .hint kbd {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 1px 5px;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    background: var(--surface);
+  }
+
+  /* --- Print: lay every slide out so the deck can become a PDF --- */
+  @media print {
+    body { background: #fff; }
+    .bar, .nav, .hint { display: none !important; }
+    .stage { box-shadow: none; border: 0; padding: 0; min-height: 0; display: block; }
+    .slide { display: flex !important; page-break-after: always; padding: 22px 0; animation: none; }
+    .slide:last-child { page-break-after: auto; }
+  }
+</style>
+
+<div class="deck">
+
+  <header class="bar">
+    <div class="wordmark">
+      Lead<b>Guard</b>
+      <span data-en="Interview walkthrough" data-fr="Présentation d’entretien"></span>
+    </div>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+
+    <!-- 1 ─ Title ------------------------------------------------- -->
+    <section class="slide" aria-label="Title">
+      <p class="eyebrow"
+         data-en="Technical proof of concept · Lead qualification"
+         data-fr="Proof of concept technique · Qualification de leads"></p>
+      <h1>LeadGuard</h1>
+      <p class="title-sub"
+         data-en="AI-assisted lead qualification &amp; routing"
+         data-fr="Qualification et routage de leads assistés par IA"></p>
+      <p class="lede"
+         data-en="A prospect fills in a web form. Two seconds later the lead is <strong>scored, deduplicated, justified in writing and sitting with the right sales team</strong> — or flagged for a human to look at. Across six lines of business, each with its own definition of a good lead."
+         data-fr="Un prospect remplit un formulaire. Deux secondes plus tard, le lead est <strong>noté, dédoublonné, justifié par écrit et posé chez la bonne équipe commerciale</strong> — ou signalé pour qu’un humain y jette un œil. Sur six métiers, chacun avec sa propre définition d’un bon lead."></p>
+      <div class="grow"></div>
+      <div class="facts">
+        <span class="fact" data-en="<b>6</b> lines of business" data-fr="<b>6</b> métiers"></span>
+        <span class="fact" data-en="<b>3</b> countries · FR ES IT" data-fr="<b>3</b> pays · FR ES IT"></span>
+        <span class="fact" data-en="<b>142</b> automated tests" data-fr="<b>142</b> tests automatisés"></span>
+        <span class="fact" data-en="Runs with <b>one command</b>" data-fr="Démarre en <b>une commande</b>"></span>
+      </div>
+    </section>
+
+    <!-- 2 ─ Problem ---------------------------------------------- -->
+    <section class="slide" hidden aria-label="The problem">
+      <p class="eyebrow" data-en="The problem" data-fr="Le problème"></p>
+      <h2 data-en="Leads arrive in bulk. They are not worth the same."
+          data-fr="Les leads arrivent en masse. Ils ne valent pas la même chose."></h2>
+      <p class="lede"
+         data-en="They come from Google Ads, Meta, partner forms and affiliates — each with its own field names. A few are excellent. Many have a problem that only shows up once a salesperson has already wasted a call."
+         data-fr="Ils viennent de Google Ads, Meta, de formulaires partenaires et d’affiliés — chacun avec ses propres noms de champs. Quelques-uns sont excellents. Beaucoup ont un défaut qui n’apparaît qu’après qu’un commercial a déjà perdu un appel."></p>
+      <div class="cols">
+        <div class="box">
+          <span class="tag">01</span>
+          <h3 data-en="The same person, twice" data-fr="La même personne, deux fois"></h3>
+          <p data-en="Submitted through two channels. Two salespeople call. The prospect is annoyed."
+             data-fr="Soumis par deux canaux. Deux commerciaux appellent. Le prospect s’agace."></p>
+        </div>
+        <div class="box">
+          <span class="tag">02</span>
+          <h3 data-en="No consent" data-fr="Pas de consentement"></h3>
+          <p data-en="Legally uncontactable. Worth knowing before the call, not after."
+             data-fr="Légalement non contactable. Mieux vaut le savoir avant l’appel qu’après."></p>
+        </div>
+        <div class="box">
+          <span class="tag">03</span>
+          <h3 data-en="Missing the deciding facts" data-fr="Il manque le fait décisif"></h3>
+          <p data-en="No budget, or a tenant who cannot commission the work at all."
+             data-fr="Pas de budget, ou un locataire qui ne peut pas commander les travaux."></p>
+        </div>
+        <div class="box">
+          <span class="tag">04</span>
+          <h3 data-en="The real need is a paragraph" data-fr="Le vrai besoin est un paragraphe"></h3>
+          <p data-en="What the prospect actually wants sits in free text that no column can hold."
+             data-fr="Ce que veut réellement le prospect est dans un texte libre qu’aucune colonne ne peut stocker."></p>
+        </div>
+      </div>
+      <div class="grow"></div>
+      <p class="punch"
+         data-en="Sorting this by hand does not scale. Handing it to one opaque model does not hold up either — because you cannot explain to a client, or a regulator, <strong>why</strong> a lead was refused."
+         data-fr="Trier ça à la main ne passe pas à l’échelle. Le confier à un seul modèle opaque ne tient pas davantage — parce qu’on ne peut expliquer ni à un client ni à un régulateur <strong>pourquoi</strong> un lead a été refusé."></p>
+    </section>
+
+    <!-- 3 ─ The chain -------------------------------------------- -->
+    <section class="slide" hidden aria-label="What it does">
+      <p class="eyebrow" data-en="What LeadGuard does" data-fr="Ce que fait LeadGuard"></p>
+      <h2 data-en="One inspection line, ten stations."
+          data-fr="Une seule chaîne de contrôle, dix postes."></h2>
+      <p class="lede"
+         data-en="Every lead walks the same line, in the same order, whether it arrives from an ad platform or is typed in by hand. Nothing skips a station."
+         data-fr="Chaque lead parcourt la même chaîne, dans le même ordre, qu’il arrive d’une plateforme publicitaire ou qu’il soit saisi à la main. Aucun poste n’est sauté."></p>
+
+      <div class="chain">
+        <div class="step"><span class="n">01</span><span class="t" data-en="Received" data-fr="Réception"></span></div>
+        <div class="step"><span class="n">02</span><span class="t" data-en="Checked" data-fr="Validation"></span></div>
+        <div class="step"><span class="n">03</span><span class="t" data-en="Consent" data-fr="Consentement"></span></div>
+        <div class="step"><span class="n">04</span><span class="t" data-en="Duplicates" data-fr="Doublons"></span></div>
+        <div class="step ai"><span class="n">05</span><span class="t" data-en="AI reading" data-fr="Lecture IA"></span></div>
+        <div class="step"><span class="n">06</span><span class="t" data-en="Rules per business" data-fr="Règles du métier"></span></div>
+        <div class="step"><span class="n">07</span><span class="t" data-en="Score" data-fr="Score"></span></div>
+        <div class="step"><span class="n">08</span><span class="t" data-en="Decision" data-fr="Décision"></span></div>
+        <div class="step"><span class="n">09</span><span class="t" data-en="Sales team" data-fr="Équipe"></span></div>
+        <div class="step"><span class="n">10</span><span class="t" data-en="CRM" data-fr="CRM"></span></div>
+      </div>
+
+      <div class="duo">
+        <div class="box">
+          <span class="tag" data-en="Two doors, one line" data-fr="Deux portes, une chaîne"></span>
+          <p data-en="An ad platform posts automatically; a team member can type a lead in by hand. Both go through the identical ten stations, so the two can never drift apart."
+             data-fr="Une plateforme publicitaire envoie automatiquement ; un collaborateur peut saisir un lead à la main. Les deux passent par les dix mêmes postes, donc les deux chemins ne peuvent jamais diverger."></p>
+        </div>
+        <div class="box">
+          <span class="tag" data-en="Only one station is AI" data-fr="Un seul poste est de l’IA"></span>
+          <p data-en="Station 05, highlighted above, is the only one where a language model is involved. Everything that follows is fixed arithmetic — and station 06 applies the criteria of the lead’s own line of business."
+             data-fr="Le poste 05, surligné ci-dessus, est le seul où un modèle de langage intervient. Tout ce qui suit est de l’arithmétique fixe — et le poste 06 applique les critères du métier propre au lead."></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 ─ The key idea ----------------------------------------- -->
+    <section class="slide" hidden aria-label="The key idea">
+      <p class="eyebrow" data-en="The central idea" data-fr="L’idée centrale"></p>
+      <h2 data-en="The AI reads. The rules decide."
+          data-fr="L’IA lit. Les règles décident."></h2>
+
+      <div class="duo">
+        <div>
+          <span class="tag" data-en="What the AI is given, and what it returns"
+                            data-fr="Ce qu’on donne à l’IA, et ce qu’elle rend"></span>
+          <blockquote class="quote">
+            <span data-en="“I bought a house near Lyon and I would like to replace my oil boiler with a heat pump before winter.”"
+                  data-fr="« J’ai acheté une maison près de Lyon et je voudrais remplacer ma chaudière fioul par une pompe à chaleur avant l’hiver. »"></span>
+            <cite data-en="Free text, as the prospect wrote it" data-fr="Texte libre, tel que le prospect l’a écrit"></cite>
+          </blockquote>
+          <dl class="fields" style="margin-top:12px">
+            <div><dt data-en="Project" data-fr="Projet"></dt><dd>heat_pump</dd></div>
+            <div><dt data-en="Location" data-fr="Localisation"></dt><dd>Lyon</dd></div>
+            <div><dt data-en="Property" data-fr="Logement"></dt><dd>house</dd></div>
+            <div><dt data-en="Owner" data-fr="Propriétaire"></dt><dd>true</dd></div>
+            <div><dt data-en="Urgency" data-fr="Urgence"></dt><dd>high</dd></div>
+            <div><dt data-en="Buying intent" data-fr="Intention d’achat"></dt><dd>high</dd></div>
+          </dl>
+        </div>
+        <div>
+          <span class="tag" data-en="What it is never allowed to do"
+                            data-fr="Ce qu’elle n’a jamais le droit de faire"></span>
+          <div class="box" style="background:var(--surface-2)">
+            <h3 data-en="It never sees the score." data-fr="Elle ne voit jamais le score."></h3>
+            <p data-en="The AI is handed one paragraph and returns six fields. It is not shown the point values, the thresholds, or the verdict. It cannot nudge them."
+               data-fr="On lui donne un paragraphe, elle rend six champs. On ne lui montre ni les points, ni les seuils, ni le verdict. Elle ne peut pas les influencer."></p>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <h3 data-en="If it breaks, nothing is lost." data-fr="Si elle tombe, rien n’est perdu."></h3>
+            <p data-en="Provider down or too slow? The lead is still scored on the facts the prospect submitted, and simply goes to a human. It is never dropped."
+               data-fr="Fournisseur en panne ou trop lent ? Le lead est quand même noté sur les faits déclarés par le prospect, et part simplement chez un humain. Il n’est jamais perdu."></p>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <h3 data-en="Swapping vendors is one line." data-fr="Changer de fournisseur, c’est une ligne."></h3>
+            <p data-en="OpenAI, Anthropic, or a keyword-based stand-in that needs no key at all — the rest of the system cannot tell the difference."
+               data-fr="OpenAI, Anthropic, ou un substitut à mots-clés qui ne demande aucune clé — le reste du système ne voit pas la différence."></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+      <p class="punch"
+         data-en="A language model is very good at understanding a sentence, and very bad at defending a refusal. So it gets the reading, and <strong>never the decision</strong>. That split is the whole design."
+         data-fr="Un modèle de langage est très bon pour comprendre une phrase, et très mauvais pour défendre un refus. On lui confie donc la lecture, et <strong>jamais la décision</strong>. Toute l’architecture tient dans ce partage."></p>
+    </section>
+
+    <!-- 5 ─ Six verticals ---------------------------------------- -->
+    <section class="slide" hidden aria-label="Six verticals">
+      <p class="eyebrow" data-en="Six lines of business" data-fr="Six métiers"></p>
+      <h2 data-en="One pipeline. Six different definitions of a good lead."
+          data-fr="Un pipeline. Six définitions différentes d’un bon lead."></h2>
+      <p class="lede"
+         data-en="A heat pump lead is worthless without property ownership. A B2B IT lead is worthless without decision-making power. <strong>Neither criterion means anything in the other business.</strong>"
+         data-fr="Un lead pompe à chaleur ne vaut rien sans la propriété du logement. Un lead IT B2B ne vaut rien sans pouvoir de décision. <strong>Aucun des deux critères n’a de sens dans l’autre métier.</strong>"></p>
+
+      <div class="split" aria-hidden="true">
+        <div class="u" data-en="68 pts · universal checks" data-fr="68 pts · contrôles universels"></div>
+        <div class="v" data-en="32 pts · this business" data-fr="32 pts · ce métier"></div>
+      </div>
+
+      <div class="verts">
+        <div class="vert">
+          <h3 data-en="Heat pumps" data-fr="Pompe à chaleur"></h3>
+          <ol>
+            <li data-en="Owns the property" data-fr="Statut propriétaire du logement"></li>
+            <li data-en="Current heating system and its age" data-fr="Système de chauffage actuel et son ancienneté"></li>
+            <li data-en="Surface and property type" data-fr="Surface et type de logement"></li>
+          </ol>
+        </div>
+        <div class="vert">
+          <h3 data-en="Solar" data-fr="Photovoltaïque"></h3>
+          <ol>
+            <li data-en="Owns the roof concerned" data-fr="Propriétaire de la toiture concernée"></li>
+            <li data-en="Roof cover and dominant orientation" data-fr="Type de couverture et orientation dominante"></li>
+            <li data-en="Self-consumption or surplus resale" data-fr="Autoconsommation ou revente de surplus"></li>
+          </ol>
+        </div>
+        <div class="vert">
+          <h3 data-en="Hearing aids" data-fr="Audioprothèse"></h3>
+          <ol>
+            <li data-en="Difficulty declared by the person themselves" data-fr="Gêne déclarée par la personne elle-même"></li>
+            <li data-en="Age bracket and support situation" data-fr="Tranche d’âge et situation d’accompagnement"></li>
+            <li data-en="Health cover and reimbursement" data-fr="Couverture mutuelle et prise en charge"></li>
+          </ol>
+        </div>
+        <div class="vert">
+          <h3 data-en="Health insurance" data-fr="Assurance santé"></h3>
+          <ol>
+            <li data-en="Health, provident or borrower cover" data-fr="Besoin : santé, prévoyance ou emprunteur"></li>
+            <li data-en="Household and number of beneficiaries" data-fr="Situation familiale et nombre de bénéficiaires"></li>
+            <li data-en="Current contract and renewal date" data-fr="Contrat en cours et date d’échéance"></li>
+          </ol>
+        </div>
+        <div class="vert">
+          <h3 data-en="Energy renovation" data-fr="Rénovation énergétique"></h3>
+          <ol>
+            <li data-en="Owner-occupier or landlord" data-fr="Propriétaire occupant ou bailleur"></li>
+            <li data-en="Property age and type" data-fr="Ancienneté du logement et type de bien"></li>
+            <li data-en="Nature of the planned works" data-fr="Nature des travaux envisagés"></li>
+          </ol>
+        </div>
+        <div class="vert">
+          <h3 data-en="B2B IT" data-fr="IT B2B"></h3>
+          <ol>
+            <li data-en="Role and decision-making power" data-fr="Fonction et pouvoir de décision"></li>
+            <li data-en="Company size and sector" data-fr="Taille de l’entreprise et secteur"></li>
+            <li data-en="Software, managed services or cybersecurity" data-fr="Logiciel, infogérance ou cybersécurité"></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+      <p class="punch"
+         data-en="And if we cannot tell which business a lead belongs to, it <strong>tops out at 68 out of 100</strong> — not by special case, but because the third of the scale that checks eligibility was never run. It can never be auto-qualified. A person looks at it."
+         data-fr="Et si l’on n’arrive pas à dire de quel métier relève un lead, il <strong>plafonne à 68 sur 100</strong> — non par cas particulier, mais parce que le tiers de l’échelle qui vérifie l’éligibilité n’a jamais été exécuté. Il ne peut jamais être qualifié automatiquement. Un humain le regarde."></p>
+    </section>
+
+    <!-- 6 ─ Score sheet ------------------------------------------ -->
+    <section class="slide" hidden aria-label="How the score is built">
+      <p class="eyebrow" data-en="How the score is built" data-fr="Comment le score se construit"></p>
+      <h2 data-en="A hundred points. Every one of them explained."
+          data-fr="Cent points. Chacun d’eux justifié."></h2>
+      <p class="lede"
+         data-en="Thomas asked for a heat pump. So he is scored on the six universal checks <strong>plus the four heat pump criteria</strong> — and on nothing else."
+         data-fr="Thomas demande une pompe à chaleur. Il est donc noté sur les six contrôles universels <strong>plus les quatre critères pompe à chaleur</strong> — et sur rien d’autre."></p>
+
+      <div class="duo">
+        <div class="sheet">
+          <table>
+            <thead>
+              <tr>
+                <th data-en="Checks on Thomas Martin" data-fr="Contrôles sur Thomas Martin"></th>
+                <th data-en="Points" data-fr="Points"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2" style="padding-top:10px">
+                <span class="tag" style="margin:0" data-en="Universal · every lead" data-fr="Universel · tous les leads"></span>
+              </td></tr>
+              <tr><td data-en="Consent granted" data-fr="Consentement accordé"></td><td class="pts">+20</td></tr>
+              <tr><td data-en="Clear, detailed request" data-fr="Demande claire et détaillée"></td><td class="pts">+12</td></tr>
+              <tr><td data-en="Strong buying intent" data-fr="Forte intention d’achat"></td><td class="pts">+10</td></tr>
+              <tr><td data-en="Deadline before winter" data-fr="Échéance avant l’hiver"></td><td class="pts">+10</td></tr>
+              <tr><td data-en="Valid email" data-fr="E-mail valide"></td><td class="pts">+8</td></tr>
+              <tr><td data-en="Valid French phone number" data-fr="Téléphone français valide"></td><td class="pts">+8</td></tr>
+
+              <tr><td colspan="2" style="padding-top:14px">
+                <span class="tag" style="margin:0;color:var(--accent-ink)"
+                      data-en="Heat pump only · the eligibility criteria"
+                      data-fr="Pompe à chaleur uniquement · les critères d’éligibilité"></span>
+              </td></tr>
+              <tr><td data-en="Owns the property" data-fr="Propriétaire du logement"></td><td class="pts">+11</td></tr>
+              <tr><td data-en="Oil boiler — but its age is not stated" data-fr="Chaudière fioul — mais l’ancienneté n’est pas dite"></td><td class="pts part">+5 / 8</td></tr>
+              <tr><td data-en="House of 120 m²" data-fr="Maison de 120 m²"></td><td class="pts">+6</td></tr>
+              <tr><td data-en="Budget of 12 000 € — below the reference" data-fr="Budget de 12 000 € — sous la référence"></td><td class="pts part">+4 / 7</td></tr>
+              <tr class="total">
+                <td data-en="Total" data-fr="Total"></td>
+                <td class="pts">94</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="readout">
+            <div class="big good">94<small> / 100</small></div>
+            <span class="pill good">QUALIFIED</span>
+          </div>
+          <div class="box" style="margin-top:16px">
+            <h3 data-en="Why 94 and not 100?" data-fr="Pourquoi 94 et pas 100 ?"></h3>
+            <p data-en="Two criteria are only half met. He names his oil boiler but never says how old it is — and the criterion is the system <em>and</em> its age. His 12 000 € is workable but under the ~15 000 € a heat pump usually costs. Both gaps are written down in words."
+               data-fr="Deux critères ne sont qu’à moitié remplis. Il nomme sa chaudière fioul mais ne dit jamais son âge — et le critère est le système <em>et</em> son ancienneté. Ses 12 000 € sont jouables mais sous les ~15 000 € qu’une PAC coûte en général. Les deux manques sont inscrits en clair."></p>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <h3 data-en="Which is useful to a salesperson" data-fr="Ce qui est utile à un commercial"></h3>
+            <p data-en="The score does not just rank the lead — it says what to ask first. Here: how old is the boiler, and is the budget firm."
+               data-fr="Le score ne classe pas seulement le lead — il dit quoi demander en premier. Ici : quel âge a la chaudière, et le budget est-il ferme."></p>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <h3 data-en="Retuning is one number" data-fr="Réajuster, c’est un chiffre"></h3>
+            <p data-en="Sales think ownership should weigh more than urgency? That is one value in one file. Nothing else in the system moves, and a test checks the scale still adds up to 100."
+               data-fr="Les commerciaux estiment que la propriété doit peser plus que l’urgence ? C’est une valeur dans un fichier. Rien d’autre ne bouge, et un test vérifie que l’échelle fait toujours 100."></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 ─ Three outcomes --------------------------------------- -->
+    <section class="slide" hidden aria-label="Three outcomes">
+      <p class="eyebrow" data-en="Three outcomes, one scale" data-fr="Trois issues, une seule échelle"></p>
+      <h2 data-en="Send it, check it, or drop it."
+          data-fr="On envoie, on vérifie, ou on écarte."></h2>
+      <p class="lede"
+         data-en="Three real leads from the demo, in three different businesses, with the numbers the system actually produces."
+         data-fr="Trois leads réels de la démo, dans trois métiers différents, avec les chiffres que le système produit vraiment."></p>
+
+      <div class="cols">
+        <div class="outcome good">
+          <span class="tag" data-en="80 and above · heat pump" data-fr="80 et plus · pompe à chaleur"></span>
+          <div class="who">Thomas Martin</div>
+          <div class="num">94<small> / 100</small></div>
+          <span class="pill good" style="align-self:flex-start">QUALIFIED</span>
+          <p data-en="Owner, oil boiler to replace, 120 m² house, deadline before winter, consent given."
+             data-fr="Propriétaire, chaudière fioul à remplacer, maison de 120 m², échéance avant l’hiver, consentement donné."></p>
+          <div class="dest" data-en="→ PAC Lyon · sent to CRM" data-fr="→ PAC Lyon · envoyé au CRM"></div>
+        </div>
+        <div class="outcome mid">
+          <span class="tag" data-en="50 to 79 · solar" data-fr="50 à 79 · photovoltaïque"></span>
+          <div class="who">Laura Garcia</div>
+          <div class="num">72<small> / 100</small></div>
+          <span class="pill mid" style="align-self:flex-start">REVIEW</span>
+          <p data-en="Tile roof, due south, self-consumption — all extracted. But she never said she owns the roof, and gave no budget."
+             data-fr="Toiture en tuiles, plein sud, autoconsommation — tout est extrait. Mais elle n’a jamais dit qu’elle est propriétaire de la toiture, et n’a donné aucun budget."></p>
+          <div class="dest" data-en="→ waiting for a human" data-fr="→ en attente d’un humain"></div>
+        </div>
+        <div class="outcome poor">
+          <span class="tag" data-en="Below 50 · no business identified" data-fr="Moins de 50 · aucun métier identifié"></span>
+          <div class="who">Marco Rossi</div>
+          <div class="num">8<small> / 68</small></div>
+          <span class="pill poor" style="align-self:flex-start">REJECTED</span>
+          <p data-en="No consent, a phone number that cannot exist, and “need some info” as the whole request."
+             data-fr="Pas de consentement, un numéro de téléphone impossible, et « des infos svp » pour toute demande."></p>
+          <div class="dest" data-en="→ not sent · kept on file" data-fr="→ non envoyé · conservé au dossier"></div>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+      <p class="punch"
+         data-en="Marco is <strong>rejected but still recorded</strong>, with every reason why. That is how you can later tell a traffic partner that their leads arrive without consent — you have the receipts, lead by lead."
+         data-fr="Marco est <strong>rejeté mais tout de même enregistré</strong>, avec toutes les raisons. C’est ainsi qu’on peut dire plus tard à un partenaire que ses leads arrivent sans consentement — les preuves sont là, lead par lead."></p>
+    </section>
+
+    <!-- 7b ─ Same business, one criterion apart ------------------- -->
+    <section class="slide" hidden aria-label="Same business, one criterion apart">
+      <p class="eyebrow" data-en="The clearest example" data-fr="L’exemple le plus parlant"></p>
+      <h2 data-en="Same business. Same pipeline. One criterion apart."
+          data-fr="Même métier. Même pipeline. Un seul critère d’écart."></h2>
+      <p class="lede"
+         data-en="Two B2B IT leads. Both consented, both reachable, both describing a real project. The gap between them is <strong>who can sign</strong>."
+         data-fr="Deux leads IT B2B. Tous deux consentants, joignables, décrivant un vrai projet. L’écart entre eux, c’est <strong>qui peut signer</strong>."></p>
+
+      <div class="versus">
+        <div class="outcome good">
+          <span class="tag" data-en="Decision-maker" data-fr="Décideuse"></span>
+          <div class="who">Sylvie Chen</div>
+          <div class="num">100<small> / 100</small></div>
+          <span class="pill good" style="align-self:flex-start">QUALIFIED</span>
+          <p data-en="“I am the IT director of a 180-staff manufacturer and I decide the budget. We are looking for a managed services provider, as soon as possible.”"
+             data-fr="« Je suis DSI d’une industrie de 180 salariés et je décide du budget. Nous cherchons un prestataire pour l’infogérance, dès que possible. »"></p>
+          <div class="dest" data-en="→ IT Enterprise · sent to CRM" data-fr="→ IT Enterprise · envoyé au CRM"></div>
+        </div>
+        <div class="mid" data-en="VS" data-fr="VS"></div>
+        <div class="outcome mid">
+          <span class="tag" data-en="No buying authority" data-fr="Sans pouvoir d’achat"></span>
+          <div class="who">Kevin Petit</div>
+          <div class="num">67<small> / 100</small></div>
+          <span class="pill mid" style="align-self:flex-start">REVIEW</span>
+          <p data-en="“I am a technician and I am looking into cybersecurity for our shop.”"
+             data-fr="« Je suis technicien et je me renseigne sur la cybersécurité pour notre commerce. »"></p>
+          <div class="dest" data-en="→ needs a decision-maker first" data-fr="→ il faut d’abord un décideur"></div>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+      <p class="punch"
+         data-en="The system’s own words for Kevin: <em>“Contact influences but does not decide: a decision-maker is still needed.”</em> Nobody has to guess what to do with him — <strong>the lead comes with its own instruction</strong>."
+         data-fr="Les mots du système pour Kevin : <em>« Ce contact influence mais ne décide pas : il faut encore un décideur. »</em> Personne n’a à deviner quoi en faire — <strong>le lead arrive avec sa propre consigne</strong>."></p>
+    </section>
+
+    <!-- 8 ─ Human in the loop ------------------------------------ -->
+    <section class="slide" hidden aria-label="Human in the loop">
+      <p class="eyebrow" data-en="When the system is unsure" data-fr="Quand le système hésite"></p>
+      <h2 data-en="A person decides — and both verdicts are kept."
+          data-fr="Un humain tranche — et les deux verdicts sont conservés."></h2>
+      <p class="lede"
+         data-en="Laura scored 72, so she waits. The screen shows exactly what is missing, in plain words, and offers two buttons — the reviewer never re-reads her message."
+         data-fr="Laura a obtenu 72, donc elle attend. L’écran affiche exactement ce qui manque, en clair, et propose deux boutons — le relecteur ne relit jamais son message."></p>
+
+      <div class="box" style="background:var(--surface-2)">
+        <span class="tag" data-en="What the reviewer sees" data-fr="Ce que voit le relecteur"></span>
+        <div class="readout" style="margin-bottom:12px">
+          <div class="big mid">72<small> / 100</small></div>
+          <span class="pill mid">REVIEW</span>
+        </div>
+        <ul class="limits">
+          <li data-en="Roof ownership not confirmed" data-fr="Propriété de la toiture non confirmée"></li>
+          <li data-en="No budget provided" data-fr="Aucun budget renseigné"></li>
+          <li data-en="No time constraint expressed" data-fr="Aucune contrainte de délai exprimée"></li>
+        </ul>
+        <div style="display:flex;gap:9px;margin-top:14px;flex-wrap:wrap">
+          <span class="pill good">QUALIFY</span>
+          <span class="pill poor">REJECT</span>
+        </div>
+      </div>
+
+      <div class="decisions">
+        <div class="decision">
+          <span class="tag" data-en="What the machine said" data-fr="Ce qu’a dit la machine"></span>
+          <span class="pill mid" style="align-self:flex-start">REVIEW</span>
+          <p style="margin:0;font-size:13px;color:var(--ink-2)"
+             data-en="Kept exactly as it was. Never overwritten."
+             data-fr="Conservé tel quel. Jamais écrasé."></p>
+        </div>
+        <div class="decision">
+          <span class="tag" data-en="What the person did" data-fr="Ce qu’a fait l’humain"></span>
+          <span class="pill good" style="align-self:flex-start">QUALIFIED</span>
+          <p style="margin:0;font-size:13px;color:var(--ink-2)"
+             data-en="demo-user · “Ownership confirmed by phone” · timestamped"
+             data-fr="demo-user · « Propriété confirmée par téléphone » · horodaté"></p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+      <p class="punch"
+         data-en="Keeping both is the point. After a few hundred leads you can measure <strong>how often the humans overrule the machine, and in which direction</strong> — and that is the number you use to retune the weights."
+         data-fr="Garder les deux, c’est tout l’intérêt. Après quelques centaines de leads, on peut mesurer <strong>à quelle fréquence les humains contredisent la machine, et dans quel sens</strong> — et c’est ce chiffre qui sert à réajuster les poids."></p>
+    </section>
+
+    <!-- 9 ─ Routing + CRM ---------------------------------------- -->
+    <section class="slide" hidden aria-label="Routing and CRM">
+      <p class="eyebrow" data-en="Delivery" data-fr="Livraison"></p>
+      <h2 data-en="The right lead, to the right team, immediately."
+          data-fr="Le bon lead, à la bonne équipe, immédiatement."></h2>
+      <p class="lede"
+         data-en="Routing reads the business first — each one is bought by a different client team — then the country, then the region or the deal shape. First matching rule wins, and the last rule always matches, so a qualified lead can never end up with nobody."
+         data-fr="Le routage lit d’abord le métier — chacun est acheté par une équipe cliente différente — puis le pays, puis la région ou la forme du deal. La première règle qui correspond gagne, et la dernière correspond toujours : un lead qualifié ne peut jamais se retrouver sans personne."></p>
+
+      <div class="routes">
+        <div class="route">
+          <span class="cond" data-en="any business · Spanish lead" data-fr="tout métier · lead espagnol"></span>
+          <span class="arrow">→</span>
+          <span class="team">Iberia Desk</span>
+        </div>
+        <div class="route">
+          <span class="cond" data-en="heat pump · Rhône-Alpes" data-fr="pompe à chaleur · Rhône-Alpes"></span>
+          <span class="arrow">→</span>
+          <span class="team">PAC Lyon</span>
+        </div>
+        <div class="route">
+          <span class="cond" data-en="solar · sunny southern département" data-fr="photovoltaïque · département ensoleillé du sud"></span>
+          <span class="arrow">→</span>
+          <span class="team">Solar South</span>
+        </div>
+        <div class="route">
+          <span class="cond" data-en="hearing aid · Paris region" data-fr="audioprothèse · région parisienne"></span>
+          <span class="arrow">→</span>
+          <span class="team">Audio Île-de-France</span>
+        </div>
+        <div class="route">
+          <span class="cond" data-en="insurance · borrower cover" data-fr="assurance · besoin emprunteur"></span>
+          <span class="arrow">→</span>
+          <span class="team">Assurance Emprunteur</span>
+        </div>
+        <div class="route">
+          <span class="cond" data-en="B2B IT · 250+ staff" data-fr="IT B2B · 250+ salariés"></span>
+          <span class="arrow">→</span>
+          <span class="team">IT Enterprise</span>
+        </div>
+        <div class="route">
+          <span class="cond" data-en="no business identified" data-fr="aucun métier identifié"></span>
+          <span class="arrow">→</span>
+          <span class="team">General Sales</span>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="box">
+          <span class="tag" data-en="Then into the CRM" data-fr="Puis dans le CRM"></span>
+          <p data-en="Only qualified leads are pushed. The POC ships a stand-in CRM so the whole handover can be demonstrated live, end to end."
+             data-fr="Seuls les leads qualifiés sont poussés. Le POC embarque un CRM factice pour que tout le passage de relais soit démontrable en direct, de bout en bout."></p>
+        </div>
+        <div class="box">
+          <span class="tag" data-en="And if the CRM is down?" data-fr="Et si le CRM est en panne ?"></span>
+          <p data-en="It retries, then gives up cleanly and marks the lead “to re-send”. The lead stays qualified with us. An outage downstream never costs a lead."
+             data-fr="Il réessaie, puis abandonne proprement et marque le lead « à renvoyer ». Le lead reste qualifié chez nous. Une panne en aval ne coûte jamais un lead."></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 ─ Audit trail ------------------------------------------ -->
+    <section class="slide" hidden aria-label="Traceability">
+      <p class="eyebrow" data-en="Traceability" data-fr="Traçabilité"></p>
+      <h2 data-en="Every lead carries the story of its own decision."
+          data-fr="Chaque lead porte l’histoire de sa propre décision."></h2>
+      <p class="lede"
+         data-en="This is the real, unedited trail for Thomas. Nine lines, written as they happened, never modified and never deleted."
+         data-fr="Voici la piste réelle et non retouchée de Thomas. Neuf lignes, écrites au fil des événements, jamais modifiées ni supprimées."></p>
+
+      <div class="log">
+        <div><b>12:32:59</b><i data-en="Lead received from google_ads (campaign PAC_Lyon)" data-fr="Lead reçu de google_ads (campagne PAC_Lyon)"></i></div>
+        <div><b>12:32:59</b><i data-en="Validation passed" data-fr="Validation réussie"></i></div>
+        <div><b>12:32:59</b><i data-en="Consent verified and timestamped" data-fr="Consentement vérifié et horodaté"></i></div>
+        <div><b>12:32:59</b><i data-en="Duplicate check passed" data-fr="Contrôle de doublon réussi"></i></div>
+        <div><b>12:32:59</b><i data-en="AI analysis completed: heat_pump, oil_boiler, 120 m², urgency high" data-fr="Analyse IA terminée : heat_pump, oil_boiler, 120 m², urgence haute"></i></div>
+        <div><b>12:32:59</b><i data-en="Score calculated: 94/100 (10 checks: universal + heat_pump)" data-fr="Score calculé : 94/100 (10 contrôles : universels + heat_pump)"></i></div>
+        <div><b>12:32:59</b><i data-en="Status set to QUALIFIED (threshold 80)" data-fr="Statut passé à QUALIFIED (seuil 80)"></i></div>
+        <div><b>12:32:59</b><i data-en="Routed to PAC Lyon: heat pump in the Rhône-Alpes area" data-fr="Routé vers PAC Lyon : pompe à chaleur en Rhône-Alpes"></i></div>
+        <div class="hit"><b>12:32:59</b><i data-en="CRM synchronization successful — CRM-C07301DF" data-fr="Synchronisation CRM réussie — CRM-C07301DF"></i></div>
+      </div>
+
+      <div class="cols">
+        <div class="box">
+          <span class="tag" data-en="Consent" data-fr="Consentement"></span>
+          <p data-en="Stored with the exact moment it was given, and the source that collected it."
+             data-fr="Stocké avec le moment exact où il a été donné, et la source qui l’a recueilli."></p>
+        </div>
+        <div class="box">
+          <span class="tag" data-en="Integrity seal" data-fr="Sceau d’intégrité"></span>
+          <p data-en="A fingerprint of the identifying fields, so you can prove the record was not altered after intake."
+             data-fr="Une empreinte des champs identifiants, pour prouver que la fiche n’a pas été modifiée après réception."></p>
+        </div>
+        <div class="box">
+          <span class="tag" data-en="Nothing is erased" data-fr="Rien n’est effacé"></span>
+          <p data-en="The trail only ever grows. A decision cannot be quietly rewritten after the fact."
+             data-fr="La piste ne fait que s’allonger. Une décision ne peut pas être réécrite discrètement après coup."></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 ─ Close ----------------------------------------------- -->
+    <section class="slide" hidden aria-label="Closing">
+      <p class="eyebrow" data-en="What I would defend, and what I would not" data-fr="Ce que je défends, et ce que je ne défends pas"></p>
+      <h2 data-en="Use the AI where it is strong. Keep the decision where it can be explained."
+          data-fr="Utiliser l’IA là où elle est forte. Garder la décision là où elle s’explique."></h2>
+
+      <div class="duo">
+        <div>
+          <span class="tag" data-en="The three choices I would make again" data-fr="Les trois choix que je referais"></span>
+          <div class="box">
+            <h3 data-en="Explainable by construction" data-fr="Explicable par construction"></h3>
+            <p data-en="Every refusal comes with the sentences that caused it. Nobody has to trust a black box."
+               data-fr="Chaque refus arrive avec les phrases qui l’ont causé. Personne n’a à faire confiance à une boîte noire."></p>
+          </div>
+          <div class="box" style="margin-top:11px">
+            <h3 data-en="Nothing is welded to one vendor" data-fr="Rien n’est soudé à un fournisseur"></h3>
+            <p data-en="The AI sits behind one small contract. Swap the provider, or run with none at all, and the business logic does not notice."
+               data-fr="L’IA est derrière un petit contrat. On change de fournisseur, ou on tourne sans aucun, et la logique métier ne s’en aperçoit pas."></p>
+          </div>
+          <div class="box" style="margin-top:11px">
+            <h3 data-en="Failures degrade, they do not cascade" data-fr="Les pannes dégradent, elles ne cascadent pas"></h3>
+            <p data-en="AI down, CRM down — the lead is still captured, scored and kept. That is verified by tests, not hoped for."
+               data-fr="IA en panne, CRM en panne — le lead est quand même capté, noté et conservé. C’est vérifié par des tests, pas espéré."></p>
+          </div>
+        </div>
+        <div>
+          <span class="tag" data-en="What this POC deliberately is not" data-fr="Ce que ce POC n’est volontairement pas"></span>
+          <ul class="limits">
+            <li data-en="No accounts or permissions — the reviewer is just a name."
+                data-fr="Pas de comptes ni de droits — le relecteur n’est qu’un nom."></li>
+            <li data-en="CRM sending happens inside the request; in production it belongs in a queue."
+                data-fr="L’envoi au CRM se fait dans la requête ; en production il irait dans une file d’attente."></li>
+            <li data-en="Duplicate matching is exact plus a light heuristic — no fuzzy address matching."
+                data-fr="La détection de doublons est exacte plus une heuristique légère — pas de rapprochement d’adresses approximatif."></li>
+            <li data-en="The point weights are set by hand. Real ones would be fitted on actual conversion data."
+                data-fr="Les poids sont réglés à la main. De vrais poids seraient calibrés sur des données de conversion réelles."></li>
+            <li data-en="GDPR is demonstrated — consent, timestamp, integrity seal — not fully implemented."
+                data-fr="Le RGPD est démontré — consentement, horodatage, sceau d’intégrité — pas entièrement implémenté."></li>
+          </ul>
+          <p class="punch" style="margin-top:15px"
+             data-en="Knowing which corners were cut, and why, is part of the work."
+             data-fr="Savoir quels angles ont été coupés, et pourquoi, fait partie du travail."></p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+      <div class="facts">
+        <span class="fact" data-en="Python · FastAPI · PostgreSQL" data-fr="Python · FastAPI · PostgreSQL"></span>
+        <span class="fact" data-en="React front end" data-fr="Front-end React"></span>
+        <span class="fact" data-en="Docker · one command to run" data-fr="Docker · une commande pour lancer"></span>
+        <span class="fact" data-en="<b>142</b> tests, no API key needed" data-fr="<b>142</b> tests, sans clé API"></span>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="nav" aria-label="Slides">
+    <button type="button" id="prev" data-en="← Previous" data-fr="← Précédent"></button>
+    <div class="dots" id="dots" role="tablist" aria-label="Go to slide"></div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="count" id="count"></span>
+      <button type="button" id="next" data-en="Next →" data-fr="Suivant →"></button>
+    </div>
+  </nav>
+
+  <p class="hint"
+     data-en="Use <kbd>←</kbd> <kbd>→</kbd> to move between slides"
+     data-fr="Utilisez <kbd>←</kbd> <kbd>→</kbd> pour naviguer entre les slides"></p>
+
+</div>
+
+<script>
+  (function () {
+    'use strict';
+
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var stage  = document.getElementById('stage');
+    var dots   = document.getElementById('dots');
+    var prev   = document.getElementById('prev');
+    var next   = document.getElementById('next');
+    var count  = document.getElementById('count');
+    var index  = 0;
+    var lang   = 'fr';
+
+    /* ---- Language ------------------------------------------------
+       Every translatable node carries data-en and data-fr. The text
+       is authored here in this file, so assigning it as HTML is safe
+       and lets a phrase keep its <strong> or <kbd>.
+    -------------------------------------------------------------- */
+    function applyLang() {
+      document.documentElement.lang = lang;
+      var nodes = document.querySelectorAll('[data-' + lang + ']');
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].innerHTML = nodes[i].getAttribute('data-' + lang);
+      }
+      var buttons = document.querySelectorAll('.lang button');
+      for (var j = 0; j < buttons.length; j++) {
+        buttons[j].setAttribute('aria-pressed', String(buttons[j].dataset.lang === lang));
+      }
+      render();
+    }
+
+    document.querySelector('.lang').addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-lang]');
+      if (!button || button.dataset.lang === lang) return;
+      lang = button.dataset.lang;
+      try { localStorage.setItem('leadguard-deck-lang', lang); } catch (e) { /* private mode */ }
+      applyLang();
+    });
+
+    /* ---- Slides -------------------------------------------------- */
+    slides.forEach(function (slide, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('role', 'tab');
+      dot.addEventListener('click', function () { go(i); });
+      dots.appendChild(dot);
+    });
+
+    function render() {
+      slides.forEach(function (slide, i) { slide.hidden = i !== index; });
+      Array.prototype.forEach.call(dots.children, function (dot, i) {
+        dot.setAttribute('aria-current', String(i === index));
+        dot.setAttribute('aria-label', (lang === 'fr' ? 'Slide ' : 'Slide ') + (i + 1));
+      });
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+      count.textContent = (index + 1) + ' / ' + slides.length;
+    }
+
+    function go(target) {
+      index = Math.max(0, Math.min(slides.length - 1, target));
+      render();
+      // Re-trigger the entry animation on the slide that just appeared.
+      var current = slides[index];
+      current.style.animation = 'none';
+      void current.offsetWidth;
+      current.style.animation = '';
+    }
+
+    prev.addEventListener('click', function () { go(index - 1); });
+    next.addEventListener('click', function () { go(index + 1); });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.target.closest('button')) return;
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') { go(index + 1); }
+      else if (event.key === 'ArrowLeft' || event.key === 'PageUp') { go(index - 1); }
+      else if (event.key === 'Home') { go(0); }
+      else if (event.key === 'End') { go(slides.length - 1); }
+      else { return; }
+      event.preventDefault();
+    });
+
+    // Swipe, for presenting from a tablet.
+    var startX = null;
+    stage.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 55) { go(index + (dx < 0 ? 1 : -1)); }
+      startX = null;
+    }, { passive: true });
+
+    try {
+      var saved = localStorage.getItem('leadguard-deck-lang');
+      if (saved === 'en' || saved === 'fr') { lang = saved; }
+    } catch (e) { /* storage unavailable; keep the default */ }
+
+    applyLang();
+  })();
+</script>

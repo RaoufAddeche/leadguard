@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: leadguard
+      POSTGRES_PASSWORD: leadguard
+      POSTGRES_DB: leadguard
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # The backend must not start before Postgres accepts connections.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U leadguard -d leadguard"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://leadguard:leadguard@db:5432/leadguard
+      AI_PROVIDER: ${AI_PROVIDER:-mock}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # Populate the demo data on first boot so the dashboard is never empty.
+      SEED_ON_STARTUP: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      # Overridable because 8000 is a commonly occupied port:
+      #   BACKEND_PORT=8010 docker compose up
+      # Internal service-to-service traffic always uses backend:8000.
+      - "${BACKEND_PORT:-8000}:8000"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+
+volumes:
+  pgdata:
