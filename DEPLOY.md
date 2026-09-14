@@ -70,14 +70,20 @@ every site Caddy serves):
 leadguard.duckdns.org {
 	encode gzip zstd
 	basic_auth {
-		"<username>" <bcrypt-hash>
+		"{$LEADGUARD_USER:invite}" <bcrypt-hash>
 	}
 	reverse_proxy leadguard-frontend:80
 }
 ```
 
-Quote the username if it contains a space. Generate the hash, validate, then
-reload — **never reload without validating**:
+The username is a placeholder on purpose: the Caddyfile is versioned in a
+public repository, so the real value lives in the (untracked) `.env` next to it
+and reaches Caddy through its compose `environment`. The `:invite` default means
+a missing variable degrades to a working login instead of a parse error that
+would take every site on this Caddy down. Keep the quotes — the value may
+contain a space.
+
+Generate the hash, validate, then reload — **never reload without validating**:
 
 ```bash
 docker exec portfolio-caddy caddy hash-password --plaintext 'the-password'
@@ -113,6 +119,7 @@ from the synced tree, so the tree is the source of truth.
 | Wipe the database too | `... down -v && rm -rf volumes/postgres_data` |
 | Free disk after builds | `docker builder prune -f --filter until=72h` |
 | Change the dashboard password | re-hash, edit `~/portfolio/Caddyfile`, validate, reload |
+| Change the dashboard username | edit `LEADGUARD_USER` in `~/portfolio/.env`, then `docker compose -f ~/portfolio/docker-compose.prod.yml up -d caddy` |
 
 **`SEED_ON_STARTUP=true` resets the database on every start.** The seed truncates
 before inserting, so a restart discards leads created from the UI and re-runs one
