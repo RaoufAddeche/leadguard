@@ -16,7 +16,9 @@ class Lead(Base):
 
     # --- Raw submitted data ----------------------------------------------
     firstname: Mapped[str] = mapped_column(String(80))
-    lastname: Mapped[str] = mapped_column(String(80))
+    # Indexed because the duplicate-detection query filters on it: without
+    # the index every insert would scan the whole table.
+    lastname: Mapped[str] = mapped_column(String(80), index=True)
     email: Mapped[str] = mapped_column(String(255), index=True)
     phone: Mapped[str] = mapped_column(String(40), index=True)
     postal_code: Mapped[str] = mapped_column(String(16), index=True)

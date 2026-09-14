@@ -25,10 +25,10 @@ because the third of the scale that checks eligibility was never run.
 """
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Callable
 
-from app.models.enums import Country, Level, ProjectType, Vertical
+from app.models.enums import Country, Level, Vertical
 from app.schemas.lead import AIAnalysis, LeadCreate, RuleResult
 
 # --- Contactability ------------------------------------------------------
