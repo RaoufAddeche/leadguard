@@ -1,0 +1,77 @@
+# VPS deployment — cohabits with the portfolio and the trading bot stacks.
+#
+# Two rules make the cohabitation safe:
+#   1. No port is published on the host. The only public entrypoint is the
+#      existing Caddy (`portfolio-caddy`), which terminates TLS.
+#   2. Every service is prefixed `leadguard-`. The frontend joins the shared
+#      Caddy network, where generic names (`backend`, `frontend`, `db`) already
+#      belong to the portfolio stack — reusing one would make Docker's DNS
+#      round-robin between two different applications.
+#
+# Usage:  docker compose -f docker-compose.vps.yml up -d --build
+
+services:
+  leadguard-db:
+    # postgres:15 rather than the 16-alpine used locally: the image is already
+    # on this VPS for another stack, so it costs no extra disk (partition ~80%).
+    image: postgres:15
+    container_name: leadguard-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-leadguard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:-leadguard}
+    volumes:
+      - ./volumes/postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    mem_limit: 256m
+    networks: [leadguard_net]
+
+  leadguard-backend:
+    build: ./backend
+    container_name: leadguard-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-leadguard}:${POSTGRES_PASSWORD}@leadguard-db:5432/${POSTGRES_DB:-leadguard}
+      AI_PROVIDER: ${AI_PROVIDER:-mock}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-5}
+      # Re-seeds on every start (the seed resets first), so the public demo is
+      # always in a known state. Set to false to keep visitor-created leads.
+      SEED_ON_STARTUP: ${SEED_ON_STARTUP:-true}
+    depends_on:
+      leadguard-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      # The startup seed calls the AI provider once per lead: leave it room.
+      start_period: 90s
+    mem_limit: 384m
+    networks: [leadguard_net]
+
+  leadguard-frontend:
+    build: ./frontend
+    container_name: leadguard-frontend
+    restart: unless-stopped
+    environment:
+      # Injected into nginx.conf at container start.
+      BACKEND_UPSTREAM: leadguard-backend:8000
+    depends_on: [leadguard-backend]
+    mem_limit: 64m
+    # Only this service is reachable from Caddy; the API and the DB stay private.
+    networks: [leadguard_net, caddy_net]
+
+networks:
+  leadguard_net:
+  caddy_net:
+    external: true
+    name: portfolio_portfolio_net
